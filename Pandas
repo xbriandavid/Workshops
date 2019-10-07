@@ -1,0 +1,147 @@
+#SERIES 
+import pandas as pd
+import numpy as np
+#Series is a one-dimensional array-like object. Similar to numpy arrays.
+#It has an associated array of labels - indicies. Similar to arrays.
+#You can rename them
+
+#Create a series object:
+obj = pd.Series([4,7,-5,3]) #didn't specift indicies, automatically creates 
+
+#Specify an index:
+obj2 = pd.Series([1,2,3,4,6], index = ['A', 'B', 'C', 'D', 'E'])
+
+#print(obj2)
+
+#Indexing is also similar:
+#print(obj2['A'])
+
+#Similar Numpy operations:
+#print(obj2[obj2 > 2])
+null_obj = pd.Series([1,2,np.nan, 4, 5])
+#print(null_obj[null_obj.isnull()])
+
+
+#Dataframes are tabular data. Keep in mind it has a row and column index. 
+#Let's construct a Dataframe object. A common way with using a dict of
+#equal length lists or numpy arrays. Each column can then be accessed as a
+#series object
+
+states = ['Ohio', 'Ohio', 'Ohio', 'Nevada', 'Nevada']
+year = [2000, 2001, 2002, 2001, 2002]
+pop = [1.5, 1.7, 3.6, 2.4, 2.9]
+
+data = {'States': states, 'Year': year, 'Population': pop}
+dataframe = pd.DataFrame(data)
+#Specify columns, index
+dataframe2 = pd.DataFrame(data, columns = ['States', 'Population', 'Year'],
+                          index = ['one', 'two', 'three', 'four', 'five'])
+
+#Selecting columns will return a series object:
+#print(dataframe2['Population'])
+
+#With this in mind, we can create new columns in a similar matter:
+dataframe2['West'] = ['False', 'False', 'False', 'True', 'True']
+#print(dataframe2.values) returns a 2D array. See how dataframes, series
+#and numpy arrays are interconnected. 
+
+index = dataframe2.index
+
+#Reindex is a method to rearrange data from moving the indicies.
+#Create series 
+
+newSeries = pd.Series([4.5, 7.2, -5.3, 3.6], index = ['d', 'b', 'a', 'c'])
+newSeries = newSeries.reindex(['a', 'b', 'c', 'd'])
+
+
+#We can also reindex dataframes. Recall dataframe2. 
+
+dataframe2  = dataframe2.reindex(['five', 'four', 'three', 'two', 'one'])
+dataframe2.index = pd.Index(['A', 'B', 'C', 'D', 'E'])
+
+salaries = pd.read_csv("Position_Salaries.csv")
+
+
+##INDEXING
+#Retrieve one or more column
+
+#print columns:
+#print(salaries.columns)
+#Retrieve the level and salary columns
+#print(salaries[['Level', 'Salary']])
+
+#Print first five rows
+#print(salaries[:5])
+
+#Boolean Indexing:
+#print(salaries['Salary'][salaries['Salary'] > 100000]) 
+#The same logic applies for boolean indexing and printing the whole
+#Dataframe
+#print(salaries[salaries['Salary'] > 100000])
+
+#print(salaries.iloc[0]) #prints first row
+
+
+#print(salaries.iloc[:, [0,1]]) #prints all rows, first two columns
+#print(salaries.iloc[[4,5,6], :]) #prints 4th, 5th, 6th rows, all columns 
+#print(salaries.iloc[np.r_[1:3, 6:8, 8], np.r_[0:1, 2:3]])
+
+#change individual element
+#salaries.iloc[4, 1] = 1000
+
+
+
+#LOC is fairly similar; instead of numbers, use the row/column names. 
+#for this specific example, let's change the index of the dataframe to the 
+#positions
+
+#salaries.set_index([salaries['Position']])
+salaries.set_index(['Position'], inplace = True)
+
+#prints first two rows, all columns
+#print(salaries.loc[['Business Analyst', 'Junior Consultant'], :]) 
+
+#prints all rows, second/third column
+#print(salaries.loc[:, ['Level', 'Salary']])
+
+
+#Using any method
+#print((salaries.Salary < 10000).values.any())
+# =======================================================
+
+#                    Basic Arithmetic 
+
+# =======================================================
+# Let's reset the index:
+# multiply the salaries by 2.
+salaries.reset_index(inplace = True)
+salaries['Salary'] = salaries['Salary'] * 2
+
+#import the wine data set:
+#This data set does have null values. 
+#5 columns contain some missing data
+#22 rows contain some missing data
+
+wine = pd.read_csv("winequality-red.csv")
+#print(wine.isnull().any(axis = 0))
+#wine.dropna(axis=0, inplace = True)
+#wine.dropna(axis = 1, inplace = True)
+
+#FILLING IN MISSING DATA:
+#Fill all missing data with zeros
+#wine.fillna(0, inplace = True)
+#print(wine.isnull().any(axis=0))
+#fill by specific column:
+
+#wine.fillna({2:0, 4:2}, inplace = True)
+
+
+# =================================================
+
+#              Descriptive Stats
+
+wine_desc = wine.describe()
+wine_desc.iloc[1,:2].plot.bar(y ='mean')
+
+#Graph of counts
+wine_desc.iloc[0, :].plot.bar(y = 'count', ylim=(1580, 1620))
