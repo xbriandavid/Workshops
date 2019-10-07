@@ -1,0 +1,122 @@
+#Workshop 1 - Numpy 
+#This package is the foundation for numerical computation. 
+# The base structure in numpy is the ndarray. These allows us to 
+# build vectors, matricies. 
+# Important attribute: shape of the ndarray. 
+#Take up less space, are faster, better for linear algebra operations 
+
+#Import the package:
+import numpy as np
+
+#creating ndarrays
+example_ndarray = np.array([1,2,3,4,5,6])
+listex = [1,2,3,4,5]
+listex = np.array(listex)
+
+# Change datatype: example_ndarray = example_ndarray.astype(np.float64)
+
+# === Generating numbers ===
+# (1) uppper boundary not included
+example_ndarray2 = np.arange(2, 50, 2) #from 2 to 48 
+
+#Create 2 x 3 matrix:
+multi_nd = np.array([[1,2,3], [4,5,6]])
+
+# Create array of zeros 
+#array of zeros:
+zero_nd = np.zeros((4,4)) #Creates 4x4 matrix full of zeros
+
+# Creating matrix with 1s on the diagonals:
+diagonalOnes_nd = np.eye(5) #Will create a 5x5 matrix
+
+# Creating matrix, customizing diagonal. 
+diag_nd = np.diag([1,2,3]) #Creates 3 x 3 matrix
+
+#Much of these functions that create ndarrays result into sparse matricies 
+
+# ========== Arithmetic ===================
+#Operations between equal-size arrays applies the operation element-wise
+
+arr1 = np.array([[1,2,3,4,5], [20,19,18,17,16]]) #Creates 2x5 ndarray. 
+arr2 = np.array([[46,47,48,49, 50], [91,92,93,94,95]]) #creats 2x5 ndarray
+
+print(arr1 + arr2)
+print(arr1 * arr2)
+
+#==============================================
+
+#                   Indexing 
+
+#==============================================
+#Indexing numpy arrays is similar to indexing python lists. 
+#Warning: array slicing,indexing are only views of the array itself. They
+#are not copies. Use .copy(), this is the explicit way. 
+
+#ndarray matricies are like arrays of arrays. 
+ndarray = np.arange(1,17).reshape(4,4)
+print(ndarray[0])
+print(ndarray[0, 2]) #at a more specific point
+print(ndarray[1:3, 1:3]) #indeing multiple values 
+
+# Change values of the matrix through indexing:
+#ndarray[2, 1:3] = 0 changes the third row, columns 2 and 3 to zero. 
+
+# ====== Boolean Indexing ===========
+# When having matricies, you may want to know which entries are greater, less than
+# a specified value. 
+
+print(ndarray > 4) #returns a matrix of booleans that indicate whether it reflects
+# the operator. 
+print(ndarray[ndarray > 4]) #Explicity tells us which values of the matrix are greater than 4.
+
+mask = np.array([['Bob', 'Joe', 'Will', 'Sam', 'Jack', 'Nick']])
+print((mask =='Jack') | (mask == 'Will'))
+
+#===============================================
+
+#           More Math Methods
+
+#================================================
+#mean, sum
+#If you think back to earlier math classes, numpy  axes are similar to cartesian coordinate system.
+# Axis = 0 applies to the direction of rows and Axis = 1 refers to direction
+# of columbs. 
+print(arr1.mean())
+print(arr1.mean(axis = 1))
+print(arr1.mean(axis = 0))
+
+#Other methods:
+# sum, std, min, max, argmin, argmax
+print(arr1.sum(axis = 1))
+print(arr1.argmin())
+
+print(arr1)
+
+#Sorting can be used in place with numpy arrays and lists.
+
+z = (arr1 - arr1.mean())/(arr1.std())
+print(z.std())
+"""
+# =========================================
+
+#             Quiz Section
+
+# =========================================
+
+def addFive(listOfNums):
+    listOfNums = [x + 5 for x in listOfNums]
+    return listOfNums
+
+quizOne = [10, 20, 25, 35, 45, 50]
+
+quizOne = addFive(quizOne)
+print(quizOne)
+
+quizTwo = np.zeros((5,5))
+quizTwo[1,1] = 5
+
+print(quizTwo)
+
+quizThree = np.arange(1,16).reshape(3,5)
+print(quizThree)
+"""
