@@ -36,6 +36,7 @@ diag_nd = np.diag([1,2,3]) #Creates 3 x 3 matrix
 
 # ========== Arithmetic ===================
 #Operations between equal-size arrays applies the operation element-wise
+#Dimension mismatch isn't usually taken into account. 
 
 arr1 = np.array([[1,2,3,4,5], [20,19,18,17,16]]) #Creates 2x5 ndarray. 
 arr2 = np.array([[46,47,48,49, 50], [91,92,93,94,95]]) #creats 2x5 ndarray
