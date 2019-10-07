@@ -19,6 +19,11 @@ listex = np.array(listex)
 # (1) uppper boundary not included
 example_ndarray2 = np.arange(2, 50, 2) #from 2 to 48 
 
+
+##Random ints:
+ex = np.random.randint(100, size=5).reshape(5,1)
+#print(ex)
+
 #Create 2 x 3 matrix:
 multi_nd = np.array([[1,2,3], [4,5,6]])
 
@@ -36,7 +41,6 @@ diag_nd = np.diag([1,2,3]) #Creates 3 x 3 matrix
 
 # ========== Arithmetic ===================
 #Operations between equal-size arrays applies the operation element-wise
-#Dimension mismatch isn't usually taken into account. 
 
 arr1 = np.array([[1,2,3,4,5], [20,19,18,17,16]]) #Creates 2x5 ndarray. 
 arr2 = np.array([[46,47,48,49, 50], [91,92,93,94,95]]) #creats 2x5 ndarray
@@ -57,7 +61,7 @@ print(arr1 * arr2)
 ndarray = np.arange(1,17).reshape(4,4)
 print(ndarray[0])
 print(ndarray[0, 2]) #at a more specific point
-print(ndarray[1:3, 1:3]) #indeing multiple values ***end value inclusive*** 
+print(ndarray[1:3, 1:3]) #indeing multiple values 
 
 # Change values of the matrix through indexing:
 #ndarray[2, 1:3] = 0 changes the third row, columns 2 and 3 to zero. 
@@ -104,14 +108,6 @@ print(z.std())
 
 # =========================================
 
-def addFive(listOfNums):
-    listOfNums = [x + 5 for x in listOfNums]
-    return listOfNums
-
-quizOne = [10, 20, 25, 35, 45, 50]
-
-quizOne = addFive(quizOne)
-print(quizOne)
 
 quizTwo = np.zeros((5,5))
 quizTwo[1,1] = 5
@@ -121,3 +117,9 @@ print(quizTwo)
 quizThree = np.arange(1,16).reshape(3,5)
 print(quizThree)
 """
+
+difZ = np.zeros((2,1))
+mul1 = np.arange(1,17).reshape(4,4)
+
+list11 = [1,2,3,4,5]
+print(list11[list11 > 2])
